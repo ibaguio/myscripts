@@ -179,3 +179,4 @@ function generateFromCourses(courses_list){
 function set_answer(course, prof){
     alert("course: "+course+"\nprof: "+prof);
 }
+main()
