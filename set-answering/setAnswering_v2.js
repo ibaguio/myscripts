@@ -49,7 +49,7 @@ function getCourseObject(){
             var cols = $(this).children("td");
             cinfo.course_name = cols[1].innerText;
             var hrefLinkTag = $(cols[4]).children()[0];
-            if (hrefLinkTag == null)
+            if (hrefLinkTag == null);
                 //not valid
             else{//new professor
                 var hrefLink = hrefLinkTag.href;
