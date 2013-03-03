@@ -16,7 +16,6 @@ function CourseInfo(){//course info object
     var course_name;
     var profs = new Array();
     var course_id;
-    var done;
 }
 function extractCourseId(link){
     var marker = "intro/";
@@ -49,9 +48,8 @@ function getCourseObject(){
             var cols = $(this).children("td");
             cinfo.course_name = cols[1].innerText;
             var hrefLinkTag = $(cols[4]).children()[0];
-            if (hrefLinkTag == null);
-                //not valid
-            else{//new professor
+            console.log(hrefLinkTag);
+            if (hrefLinkTag != null){
                 var hrefLink = hrefLinkTag.href;
                 cinfo.course_id = extractCourseId(hrefLink);
                 var newProf = new Prof();
@@ -62,18 +60,17 @@ function getCourseObject(){
             }
         }else if (tdcount == 2){
             var cols = $(this).children("td");
-            var hrefLink;
+            var hrefLink = "";
             var hrefLinkTag = $(cols[1]).children()[0];
-            if (hrefLinkTag == null){
-                //incomplete prof info
-            }else{
+            console.log(hrefLinkTag);
+            if (hrefLinkTag != null){
                 hrefLink = hrefLinkTag.href;
+                var newProf = new Prof();
+                    newProf.prof_name = extractProfName(cols[0].innerText);
+                    newProf.prof_id = extractProfId(hrefLink);
+                    newProf.full_link = hrefLink;
+                cinfo.profs.push(newProf);
             }
-            var newProf = new Prof();
-                newProf.prof_name = extractProfName(cols[0].innerText);
-                newProf.prof_id = extractProfId(hrefLink);
-                newProf.full_link = hrefLink;
-            cinfo.profs.push(newProf);
         }else if (tdcount == 0){
             courses.push(cinfo);
             isNew = true;
@@ -81,7 +78,6 @@ function getCourseObject(){
     });
     return courses;
 }
-
 
 /*
  * Methods for loading CSS and JS Scripts from CDN
@@ -131,10 +127,17 @@ function generateFromCourses(courses_list){
         var profs = course.profs;
         var rspan = profs.length;
         var p1 = profs.shift();
-        var mkup = "<tr><td rowspan='"+rspan+"'>"+course.course_name+"</td><td>"+p1.prof_name+"</td><td><a href='#' onClick='set_answer("+course.course_id+","+p1.prof_id+")'>auto evaluate</a></td><td><input type='checkbox' name='to-answer' value='"+course.course_id+"-"+p1.prof_id+"'></td></tr>";
+        console.log(p1);
+        var mkup="";
+        try{
+        mkup = "<tr><td rowspan='"+rspan+"'>"+course.course_name+"</td><td>"+p1.prof_name+"</td><td><a href='#' onClick='set_answer("+course.course_id+","+p1.prof_id+")'>auto evaluate</a></td><td><input type='checkbox' name='to-answer' value='"+course.course_id+"-"+p1.prof_id+"'></td></tr>";
+        }catch(err){}
             for (j in profs){
                 var prof = profs[j];
+                console.log(prof);
+                try{
                 mkup+= "<td>"+prof.prof_name+"</td><td><a href='#' onClick='set_answer("+course.course_id+","+prof.prof_id+")'>auto evaluate</a></td><td><input type='checkbox' name='to-answer' value='"+course.course_id+"-"+prof.prof_id+"'></td></tr>";
+                }catch(err){}
             }
             tableMarkup+=mkup;
     }
@@ -267,7 +270,7 @@ function main(){
     console.log("Please ignore this error: 404 Not Fount crs.upd.edu.ph/none");
     console.log("Loading CSS and JS code. This might take a while depending on your bandwidth. Please be patient");
     addJQUERY();
-    window.setTimeout(waitJqueryToLoad,1000);
+    window.setTimeout(waitJqueryToLoad,3000);
     function waitJqueryToLoad(){//wait for jquery to be added, then load base modal
         try{
             $("document").on("click",function(){});
@@ -275,7 +278,8 @@ function main(){
             insertBaseModal();
             mainContinue();
         }catch(err){
-            window.setTimeout(waitJqueryToLoad,1000);
+            console.log(err);
+            setTimeout(waitJqueryToLoad,1500);
         }  
     }
     function mainContinue(){
