@@ -206,7 +206,7 @@ function automateSelected(){
  */
 function set_answer(course, prof){
     console.log("sending request for; c:"+course+" p:"+prof);
-    sendRequest(prof,course)
+    sendRequest(course,prof);
 }
 
 function sendRequest(class_id,prof_id,dept){
@@ -219,9 +219,11 @@ function sendRequest(class_id,prof_id,dept){
             //console.log(xmlhttp.getAllResponseHeaders());
             console.log(xmlhttp.response);
             if (xmlhttp.status === 200){
-                alert("ANSWERING COMPLETED");
+                console.log("answer completed");
+                //alert("ANSWERING COMPLETED");
             }else{
-                alert("ANSWERING FAILED");
+                console.log("answer failed");
+                //alert("ANSWERING FAILED");
             }
         }
     }
@@ -235,10 +237,9 @@ function sendRequest(class_id,prof_id,dept){
         params+=getRandomAnswersCHE();
         console.log("CHE")
     }
-
     xmlhttp.open("POST",site_url+"set_answer/save_answer");
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
-    //xmlhttp.send(params);
+    xmlhttp.send(params);
 }
 
 function ajaxRequest(){
