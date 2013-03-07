@@ -205,7 +205,7 @@ function automateSelected(){
     function refresh(){
         window.location.reload();
     }
-    window.setTimeout(refresh, 20000);
+    window.setTimeout(refresh, 10000);
 }
 
 /*
