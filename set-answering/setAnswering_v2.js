@@ -48,7 +48,7 @@ function getCourseObject(){
             var cols = $(this).children("td");
             cinfo.course_name = cols[1].innerText;
             var hrefLinkTag = $(cols[4]).children()[0];
-            console.log(hrefLinkTag);
+            
             if (hrefLinkTag != null){
                 var hrefLink = hrefLinkTag.href;
                 cinfo.course_id = extractCourseId(hrefLink);
@@ -62,7 +62,7 @@ function getCourseObject(){
             var cols = $(this).children("td");
             var hrefLink = "";
             var hrefLinkTag = $(cols[1]).children()[0];
-            console.log(hrefLinkTag);
+            
             if (hrefLinkTag != null){
                 hrefLink = hrefLinkTag.href;
                 var newProf = new Prof();
@@ -113,7 +113,7 @@ function insertBaseModal(){
     var content = $("div#content").html();
     var newContent = content + baseModal;
     $("div#content").html(newContent);
-    console.log("")
+    
 }
 
 /*
@@ -127,14 +127,14 @@ function generateFromCourses(courses_list){
         var profs = course.profs;
         var rspan = profs.length;
         var p1 = profs.shift();
-        console.log(p1);
+        
         var mkup="";
         try{
         mkup = "<tr><td rowspan='"+rspan+"'>"+course.course_name+"</td><td>"+p1.prof_name+"</td><td><a href='#' onClick='set_answer("+course.course_id+","+p1.prof_id+")'>auto evaluate</a></td><td><input type='checkbox' name='to-answer' value='"+course.course_id+"-"+p1.prof_id+"'></td></tr>";
         }catch(err){}
             for (j in profs){
                 var prof = profs[j];
-                console.log(prof);
+                
                 try{
                 mkup+= "<td>"+prof.prof_name+"</td><td><a href='#' onClick='set_answer("+course.course_id+","+prof.prof_id+")'>auto evaluate</a></td><td><input type='checkbox' name='to-answer' value='"+course.course_id+"-"+prof.prof_id+"'></td></tr>";
                 }catch(err){}
@@ -203,7 +203,7 @@ function automateSelected(){
     });
     alert("Please wait for a few seconds and refresh the page");
     function refresh(){
-        window.reload();
+        window.location.reload();
     }
     window.setTimeout(refresh, 20000);
 }
@@ -224,7 +224,7 @@ function sendRequest(class_id,prof_id,dept){
         }if (xmlhttp.readyState === 4){
             //console.log("RESPONSE:"+xmlhttp.responseText);
             //console.log(xmlhttp.getAllResponseHeaders());
-            console.log(xmlhttp.response);
+            //console.log(xmlhttp.response);
             if (xmlhttp.status === 200){
                 console.log("answer completed");
                 //alert("ANSWERING COMPLETED");
