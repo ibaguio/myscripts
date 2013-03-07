@@ -202,6 +202,10 @@ function automateSelected(){
         sendRequest(cid,pid);
     });
     alert("Please wait for a few seconds and refresh the page");
+    function refresh(){
+        window.reload();
+    }
+    window.setTimeout(refresh, 20000);
 }
 
 /*
